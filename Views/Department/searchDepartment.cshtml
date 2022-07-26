@@ -1,0 +1,63 @@
+﻿@model IEnumerable<WebApplication1.Models.Department>
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor  HttpContextAccessor
+
+@{
+    if (HttpContextAccessor.HttpContext.Session.GetString("IsAdmin") == "true")
+        Layout = "_Layout";
+    else
+        Layout = "userLayout";
+
+}
+<center>
+    <div class="">
+        <form class="form-inline my-2 mylg-0" asp-action="searchDepartment" style="width:500px">
+            <div class="form-group">
+                <label for="searchDepartment"></label>
+                <input class="form-control mr-sm-2" name="searchDepartment" value="@ViewData["CurrentFilter"]" type="text" />
+                <input type="submit" value="search" class="btn btn-primary my-1" />
+            </div>
+        </form>
+    </div>
+</center>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartmentName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.UniversityName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FacultyName)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartmentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UniversityName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.FacultyName)
+                </td>
+
+                <td>
+                    <a asp-action="DepartmentDetails" asp-route-id="@item.DepartmentId" class="btn btn btn-outline-secondary">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

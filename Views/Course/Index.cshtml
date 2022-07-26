@@ -1,0 +1,63 @@
+﻿@model IEnumerable<WebApplication1.Models.Course>
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor  HttpContextAccessor
+
+@{ 
+    if (HttpContextAccessor.HttpContext.Session.GetString("IsAdmin") == "true")
+        Layout = "_Layout";
+    else
+        Layout = "userLayout";
+
+
+}
+<p>
+    <a asp-action="createDepartment">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.UniversityName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FacultyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartmentName)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UniversityName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.FacultyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartmentName)
+                </td>
+
+                <td>
+                    <a asp-action="editCourse" asp-route-id="@item.CourseID" class="btn btn btn-outline-primary">Edit</a> |
+                    <a asp-action="courseDetails" asp-route-id="@item.CourseID" class="btn btn btn-outline-secondary">Details</a> |
+                    <a asp-action="deleteCourse" asp-route-id="@item.CourseID" class="btn btn-danger js-delete">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

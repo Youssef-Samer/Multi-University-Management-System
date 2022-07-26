@@ -1,0 +1,46 @@
+﻿@model WebApplication1.ViewModels.FacultyAndListOfUniversity;
+
+@{ 
+    Layout = "_Layout";
+}
+
+<center>
+    <h2 class="my-4"> Create Faculty</h2>
+</center>
+
+<form method="post" asp-action="createFaculty">
+    
+        <div class=" col-md-4  mx-4" style="width:50%;left:0">
+
+            
+        <div class="form-group my-2">
+            <label class="text-muted" asp-for="@Model.Faculty.FacultyName"> </label>
+            <input type="text" class="form-control" asp-for="@Model.Faculty.FacultyName" />
+        </div>
+        <div class="form-group my-2">
+            <label class="text-muted" asp-for="@Model.Faculty.Description"> </label>
+            <input type="text" class="form-control" asp-for="@Model.Faculty.Description" />
+        </div>
+        <div class="form-group my-2">
+            <label class="text-muted" asp-for="@Model.Faculty.AreaOfExpertise"> </label>
+            <input type="text" class="form-control" asp-for="@Model.Faculty.AreaOfExpertise" />
+        </div>
+        <div class="form-group">
+            <label class="text-muted " asp-for="@Model.Faculty.UniverstyId"> </label>
+            <select class="form-control" asp-for="@Model.Faculty.UniverstyId" asp-items="@(new SelectList(Model.Universities, "UniversityId", "UniversityName"))">
+                <option></option>
+            </select>
+        </div>
+         </div>
+
+    <div class="custom-file mx-3 my-3">
+        <button type="submit" class=" btn btn-outline-primary ">
+            <i class="bi bi-check"></i>
+            Save
+        </button>
+        <a asp-action="Index" class="btn btn-outline-secondary ">
+            <i class="bi bi-x"></i>
+            Cancle
+        </a>
+    </div>
+</form>

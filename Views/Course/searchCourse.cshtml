@@ -1,0 +1,68 @@
+﻿@model IEnumerable<WebApplication1.Models.Course>
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor  HttpContextAccessor
+
+@{
+    if (HttpContextAccessor.HttpContext.Session.GetString("IsAdmin") == "true")
+        Layout = "_Layout";
+    else
+        Layout = "userLayout";
+
+}
+<center>
+    <div class="">
+        <form class="form-inline my-2 mylg-0" asp-action="searchCourse" style="width:500px">
+            <div class="form-group">
+                <label for="searchCourse"></label>
+                <input class="form-control mr-sm-2" name="searchCourse" value="@ViewData["CurrentFilter"]" type="text" />
+                <input type="submit" value="search" class="btn btn-primary my-1" />
+            </div>
+        </form>
+    </div>
+</center>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.UniversityName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FacultyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartmentName)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UniversityName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.FacultyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartmentName)
+                </td>
+
+                <td>
+                    <a asp-action="courseDetails" asp-route-id="@item.CourseID" class="btn btn btn-outline-secondary">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

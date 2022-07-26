@@ -1,0 +1,60 @@
+﻿@model IEnumerable<WebApplication1.Models.Faculty>
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor  HttpContextAccessor
+
+@{
+    if (HttpContextAccessor.HttpContext.Session.GetString("IsAdmin") == "true")
+        Layout = "_Layout";
+    else
+        Layout = "userLayout";
+
+}
+<center>
+    <div class="">
+        <form class="form-inline my-2 mylg-0" asp-action="searchFaculty" style="width:500px">
+            <div class="form-group">
+                <label for="searchFaculty"></label>
+                <input class="form-control mr-sm-2" name="searchFaculty" value="@ViewData["CurrentFilter"]" type="text" />
+                <input type="submit" value="search" class="btn btn-primary my-1" />
+            </div>
+        </form>
+    </div>
+</center>
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FacultyName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UniversityName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FacultyName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UniversityName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        <a asp-action="facultyDetails" asp-route-id="@item.FacultyId" class="btn btn btn-outline-secondary">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

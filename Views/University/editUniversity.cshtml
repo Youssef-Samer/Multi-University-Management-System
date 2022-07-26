@@ -1,0 +1,48 @@
+﻿@model WebApplication1.Models.University
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "_Layout";
+}
+
+<center>
+    <h2 class="my-4"> Edit University</h2>
+</center>
+<form method="post" asp-action="editUniversity" enctype="multipart/form-data">
+    <div class=" col-md-4  mx-4" style="width:50%;left:0">
+        <input type="hidden" asp-for="@Model.UniversityId" />
+        <div class="form-group my-2">
+            <label class="text-muted" asp-for="UniversityName"> </label>
+            <input type="text" class="form-control" asp-for="UniversityName" />
+        </div>
+        <div class="form-group my-2">
+            <label class="text-muted" asp-for="Description"> </label>
+            <input type="text" class="form-control" asp-for="Description" />
+        </div>
+        <div class="@(Model.UniversityId>0 ? string.Empty: "d-none")">
+            <div class="my-3 mx-2">
+                @{if (Model.UniversityId > 0)
+                    {
+                        var base64String = Convert.ToBase64String(Model.UniversetyPhotoLink, 0, Model.UniversetyPhotoLink.Length);
+                        base64String = "data:image/png;base64," + base64String;
+                        <img src=" @base64String" height="200" width="200" />
+                    }
+
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="custom-file mx-3 my-3">
+        <label class="custom-file-label" asp-for="UniversetyPhotoLink"></label>
+        <input type="file" custom-file-input" asp-for="UniversetyPhotoLink" accept=".jpg ,.png" />
+        <button type="submit" class=" btn btn-outline-primary ">
+            <i class="bi bi-check"></i>
+            Save
+        </button>
+        <a asp-action="Index" class="btn btn-outline-secondary ">
+            <i class="bi bi-x"></i>
+            Cancle
+        </a>
+    </div>
+</form>
